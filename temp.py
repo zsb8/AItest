@@ -4,15 +4,4 @@ print (a)
 b=pd.DataFrame(a)
 print (b)
 
-sfdfdsfsfsdfdf
-dsf
-fsaf
-fdsa- fasdfasfasfaf
-
-fds
-f
-asf
-ds
-s 
-
-11111111111111111111
+print ("ok了")
