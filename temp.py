@@ -4,17 +4,7 @@ print (a)
 b=pd.DataFrame(a)
 print (b)
 
-
-print ("dsfafsdafsa")
-fdsfda
-fsdafsdaf
-dfsaf
-fdsa
-f
-dsaf
-fdsa
-1
-11
-1
-1
-1
+sfdfdsfsfsdfdf
+dsf
+fsaf
+fdsa- fasdfasfasfaf
