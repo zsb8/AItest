@@ -1,6 +1,5 @@
 import pandas as pd
-ages = [20, 22, 25, 27, 21, 23, 37, 31, 61, 45, 41, 32]
-bins = [18, 25, 35, 60,100]
-cats = pd.cut(ages, bins)  # 按照
-cats
-print (cats)
+a=[{"a":i,"b":2*i}   for i in range(3)] #注意这里的表达方法，利用for循环，注入数据
+print (a)
+b=pd.DataFrame(a)
+print (b)
