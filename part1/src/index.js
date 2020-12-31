@@ -526,85 +526,145 @@ import {useState} from 'react';
 //     )
 // }
 // ReactDOM.render(<App17 />, document.getElementById("root"))
-//////////////exercises 1.6 - 1.14 ///////////////
-let object = {
-    good: 0,
-    neutral:0,
-    bad:0,
-    all:0,
-    ave:0,
-    pos:0
-}
-const Button = (props) => {
-    return(
-        <button onClick={props.handleClick}> {props.text} </button>
-    )
-}
-const Statistics = (props) => {
-    if (props.all !=0) {
+//////////////exercises 1.6 - 1.11  ///////////////
+///报错，解决不了，郁闷<tr> cannot appear as a child of <div>////
+// let object = {
+//     good: 0,
+//     neutral:0,
+//     bad:0,
+//     all:0,
+//     ave:0,
+//     pos:0
+// }
+// const Button = (props) => {
+//     return(
+//         <button onClick={props.handleClick}> {props.text} </button>
+//     )
+// }
+// const Statistics = (props) => {
+//     if (props.all !=0) {
+//         return(
+//             <section>
+//             <div>
+//             <table>
+//             <tbody>
+//             <Statistic text='good' value ={props.good} />
+//             <Statistic text='neutral' value ={props.neutral} />
+//             <Statistic text='bad' value ={props.bad} />
+//             <Statistic text='all' value ={props.all} />
+//             <Statistic text='ave' value ={props.ave} />
+//             <Statistic text='pos' value ={props.pos} />
+//             </tbody>
+//             </table>
+//             </div>
+//             </section>
+//         )
+//     }
+//     else{
+//         return(
+//             <div>
+//             No feedback given
+//             </div>
+//         )
+//     }
+// }
+// const Statistic = (props) => {
+//     return(
+//         <div>
+//         <tr><td width="240">{props.text}:</td><td width="240">{props.value}</td></tr>
+//         </div>
+//     )
+// }
+// const App18 = () => {
+//     const [good,setGood] = useState(0)
+//     const [neutral,setNeutral] = useState(0)
+//     const [bad,setBad] = useState(0)
+//     const handleGoodClick = () =>{
+//         setGood(good+1)
+//         object['good']=good
+//     }
+//     const handleNeutralClick = () =>{
+//         setNeutral(neutral+1)
+//         object['neutral']=neutral
+//
+//     }
+//     const handleBadClick = () =>{
+//         setBad(bad+1)
+//         object['bad']=bad
+//
+//     }
+//     object['all']=object['good']+object['neutral']+object['bad']
+//     object['ave']=(object['good']*1+object['neutral']*0+object['bad']*-1)/object['all']
+//     object['pos']=object['good']/object['all']
+//
+//     return(
+//         <div>
+//         <h1> Give your feedback </h1>
+//         <Button text='good' handleClick={handleGoodClick} /> &nbsp;&nbsp;
+//         <Button text='neutral' handleClick={handleNeutralClick} /> &nbsp;&nbsp;
+//         <Button text='bad' handleClick={handleBadClick} /> &nbsp;&nbsp;
+//         <h1> Statistics </h1>
+//         <Statistics
+//         good={object.good} neutral={object.neutral} bad={object.bad}
+//         all={object.all}  ave={object.ave}  pos={object.pos}/>
+//         </div>
+//     )
+// }
+// ReactDOM.render(<App18 />, document.getElementById("root"))
+////////////////exercises 1.12 - 1.14/////////////////////////////
+const App19 = (props) => {
+    const [selected,setSelected] = useState(0)
+    const [points,setVotes] = useState(new Array(6+1).join('0').split('').map(parseFloat))
+    const handleClick =() =>{
+        setSelected(selected+1)
+    }
+    const handleClick_vote =() =>{
+        console.log(points)
+        const copy = [...points]
+        copy[selected] +=1
+        setVotes(copy)
+        // copy[selected]=copy[selected]+1
+        // setVotes(copy[selected])
+    }
+    if (selected>5){
+        let maxnum = [0,0]
+        for (var i=0;i<5;i++){
+            if (points[i]>maxnum[1]){
+                maxnum[1] = points[i]
+                maxnum[0] = i
+            }
+        }
+        console.log(maxnum)
         return(
             <div>
-            <table>
-            <tbody>
-            <Statistic text='good' value ={props.good} />
-            <Statistic text='neutral' value ={props.neutral} />
-            <Statistic text='bad' value ={props.bad} />
-            <Statistic text='all' value ={props.all} />
-            <Statistic text='ave' value ={props.ave} />
-            <Statistic text='pos' value ={props.pos} />
-            </tbody>
-            </table>
+            <p>{props.anecdotes[5]}</p>
+            <p>has {points.[5]} votes.</p>
+            <button onClick={handleClick_vote}>vote</button>
+            <button onClick={handleClick}>next anecdotes</button>
+            <h1>Anecote with most votes</h1>
+            <p>{props.anecdotes.[maxnum[0]]}</p>
+            has {maxnum[1]} votes
             </div>
         )
     }
     else{
         return(
             <div>
-            No feedback given
+            <p>{props.anecdotes[selected]}</p>
+            <p>has {points.[selected]} votes.</p>
+            <button onClick={handleClick_vote}>vote</button>
+            <button onClick={handleClick}>next anecdotes</button>
             </div>
         )
     }
-}
-const Statistic = (props) => {
-    return(
-        <div>
-        <tr><td width="240">{props.text}:</td><td width="240">{props.value}</td></tr>
-        </div>
-    )
-}
-const App18 = () => {
-    const [good,setGood] = useState(0)
-    const [neutral,setNeutral] = useState(0)
-    const [bad,setBad] = useState(0)
-    const handleGoodClick = () =>{
-        setGood(good+1)
-        object['good']=good
-    }
-    const handleNeutralClick = () =>{
-        setNeutral(neutral+1)
-        object['neutral']=neutral
 
-    }
-    const handleBadClick = () =>{
-        setBad(bad+1)
-        object['bad']=bad
-
-    }
-    object['all']=object['good']+object['neutral']+object['bad']
-    object['ave']=(object['good']*1+object['neutral']*0+object['bad']*-1)/object['all']
-    object['pos']=object['good']/object['all']
-
-    return(
-        <div>
-        <h1> Give your feedback </h1>
-        <Button text='good' handleClick={handleGoodClick} /> &nbsp;&nbsp;
-        <Button text='neutral' handleClick={handleNeutralClick} /> &nbsp;&nbsp;
-        <Button text='bad' handleClick={handleBadClick} /> &nbsp;&nbsp;
-        <h1> Statistics </h1>
-        <Statistics
-        good={object.good} neutral={object.neutral} bad={object.bad}
-        all={object.all}  ave={object.ave}  pos={object.pos}/>
-        </div>
-    )
 }
-ReactDOM.render(<App18 />, document.getElementById("root"))
+const anecdotes = [
+    'If it hurts, do it more often',
+    'Adding manpower to a late software project makes it later!',
+    'The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
+    'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
+    'Premature optimization is the root of all evil.',
+    'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
+]
+ReactDOM.render(<App19 anecdotes={anecdotes} />, document.getElementById("root"))
