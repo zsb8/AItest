@@ -527,7 +527,6 @@ import {useState} from 'react';
 // }
 // ReactDOM.render(<App17 />, document.getElementById("root"))
 //////////////exercises 1.6 - 1.11  ///////////////
-///报错，解决不了，郁闷<tr> cannot appear as a child of <div>////
 // let object = {
 //     good: 0,
 //     neutral:0,
@@ -544,20 +543,14 @@ import {useState} from 'react';
 // const Statistics = (props) => {
 //     if (props.all !=0) {
 //         return(
-//             <section>
 //             <div>
-//             <table>
-//             <tbody>
 //             <Statistic text='good' value ={props.good} />
 //             <Statistic text='neutral' value ={props.neutral} />
 //             <Statistic text='bad' value ={props.bad} />
 //             <Statistic text='all' value ={props.all} />
 //             <Statistic text='ave' value ={props.ave} />
 //             <Statistic text='pos' value ={props.pos} />
-//             </tbody>
-//             </table>
 //             </div>
-//             </section>
 //         )
 //     }
 //     else{
@@ -571,7 +564,7 @@ import {useState} from 'react';
 // const Statistic = (props) => {
 //     return(
 //         <div>
-//         <tr><td width="240">{props.text}:</td><td width="240">{props.value}</td></tr>
+//         <table><tbody><tr><td width="240">{props.text}:</td><td width="240">{props.value}</td></tr></tbody></table>
 //         </div>
 //     )
 // }
@@ -668,3 +661,4 @@ const anecdotes = [
     'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
 ReactDOM.render(<App19 anecdotes={anecdotes} />, document.getElementById("root"))
+
