@@ -605,60 +605,318 @@ import {useState} from 'react';
 // }
 // ReactDOM.render(<App18 />, document.getElementById("root"))
 ////////////////exercises 1.12 - 1.14/////////////////////////////
-const App19 = (props) => {
-    const [selected,setSelected] = useState(0)
-    const [points,setVotes] = useState(new Array(6+1).join('0').split('').map(parseFloat))
-    const handleClick =() =>{
-        setSelected(selected+1)
-    }
-    const handleClick_vote =() =>{
-        console.log(points)
-        const copy = [...points]
-        copy[selected] +=1
-        setVotes(copy)
-        // copy[selected]=copy[selected]+1
-        // setVotes(copy[selected])
-    }
-    if (selected>5){
-        let maxnum = [0,0]
-        for (var i=0;i<5;i++){
-            if (points[i]>maxnum[1]){
-                maxnum[1] = points[i]
-                maxnum[0] = i
-            }
-        }
-        console.log(maxnum)
-        return(
-            <div>
-            <p>{props.anecdotes[5]}</p>
-            <p>has {points.[5]} votes.</p>
-            <button onClick={handleClick_vote}>vote</button>
-            <button onClick={handleClick}>next anecdotes</button>
-            <h1>Anecote with most votes</h1>
-            <p>{props.anecdotes.[maxnum[0]]}</p>
-            has {maxnum[1]} votes
-            </div>
-        )
-    }
-    else{
-        return(
-            <div>
-            <p>{props.anecdotes[selected]}</p>
-            <p>has {points.[selected]} votes.</p>
-            <button onClick={handleClick_vote}>vote</button>
-            <button onClick={handleClick}>next anecdotes</button>
-            </div>
-        )
-    }
+// const App19 = (props) => {
+//     const [selected,setSelected] = useState(0)
+//     const [points,setVotes] = useState(new Array(6+1).join('0').split('').map(parseFloat))
+//     const handleClick =() =>{
+//         setSelected(selected+1)
+//     }
+//     const handleClick_vote =() =>{
+//         console.log(points)
+//         const copy = [...points]
+//         copy[selected] +=1
+//         setVotes(copy)
+//         // copy[selected]=copy[selected]+1
+//         // setVotes(copy[selected])
+//     }
+//     if (selected>5){
+//         let maxnum = [0,0]
+//         for (var i=0;i<5;i++){
+//             if (points[i]>maxnum[1]){
+//                 maxnum[1] = points[i]
+//                 maxnum[0] = i
+//             }
+//         }
+//         console.log(maxnum)
+//         return(
+//             <div>
+//             <p>{props.anecdotes[5]}</p>
+//             <p>has {points.[5]} votes.</p>
+//             <button onClick={handleClick_vote}>vote</button>
+//             <button onClick={handleClick}>next anecdotes</button>
+//             <h1>Anecote with most votes</h1>
+//             <p>{props.anecdotes.[maxnum[0]]}</p>
+//             has {maxnum[1]} votes
+//             </div>
+//         )
+//     }
+//     else{
+//         return(
+//             <div>
+//             <p>{props.anecdotes[selected]}</p>
+//             <p>has {points.[selected]} votes.</p>
+//             <button onClick={handleClick_vote}>vote</button>
+//             <button onClick={handleClick}>next anecdotes</button>
+//             </div>
+//         )
+//     }
+//
+// }
+// const anecdotes = [
+//     'If it hurts, do it more often',
+//     'Adding manpower to a late software project makes it later!',
+//     'The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
+//     'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
+//     'Premature optimization is the root of all evil.',
+//     'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
+// ]
+// ReactDOM.render(<App19 anecdotes={anecdotes} />, document.getElementById("root"))
+////////////////鼠标点击字体变化 //////////
+// const App20 = () =>{
+//     const [text,setText] = useState(true) //使用hook看状态，初始真
+//     const handleClick = () =>{
+//         setText(!(text)) //点击后，改状态text属性，真改为假，假改为真
+//     }
+//     return(
+//         <div>
+//             <h2 onClick={handleClick}>  {text ?'你爱我么' : '我爱你'} </h2>
+//         </div>
+//     )
+// }
+// ReactDOM.render(<App20  />, document.getElementById("root"))
+////////////////点击，字体变化 ，用类/////////////////
+// class App21 extends React.Component {
+//     //由于setState只能写对象，所以这里不得不{属性写法}
+//     //注意，这里state不是随意命名的变量
+//     state = {
+//         myAttribute:true,
+//         name:'linen'
+//     }
+//     render(){
+//         const {myAttribute,name} = this.state
+//         return (
+//             <div>
+//                 <h2 onClick={this.handleClick}> {myAttribute? '你爱我么': '我爱你'} {name}</h2>
+//             </div>
+//         )
+//     }
+//     handleClick = () =>{
+//         const myAttribute = this.state.myAttribute
+//         this.setState({myAttribute:!myAttribute}) //setState是关键命令，且注意只能针对对象
+//     }
+// }
+// ReactDOM.render(<App21  />, document.getElementById("root"))
+// // class App21 extends React.Component {
+// //     state = {isLove:true}
+// //     render(){
+// //         const {isLove} = this.state
+// //         return (
+// //             <div>
+// //                 <h2 onClick={this.handleClick}> {isLove? '你爱我么': '我爱你'} </h2>
+// //             </div>
+// //         )
+// //     }
+// //     handleClick = () =>{
+// //         const isLove = this.state.isLove
+// //         this.setState({isLove:!isLove})
+// //     }
+// // }
+// ReactDOM.render(<App21  />, document.getElementById("root"))
+////////////////////////ref的回调调用////////////////
+/*需求：自定义组件，点击第一个输入框，提示一个值，第二个输入框失去焦点则提示另外一个值*/
+//这里是练习ref的.createRef()写法
+// class App22 extends React.Component{
+//     showInput = () =>{
+//         alert(this.myRef1.current.value) //注意，固定写法，KEY固定叫current
+//     }
+//     // handleBlur= () =>{
+//     //     const theinput = this.myRef2.current //注意，固定写法，KEY固定叫current
+//     //     alert(theinput.value)
+//     // }
+//     handleBlur= (event) =>{ //不用上面的，改用evet.target也可以得到input值
+//         alert(event.target.value)
+//     }
+//     myRef1 = React.createRef()//容器存储被ref所标识的节点
+//     // myRef2 = React.createRef()
+//     render(){
+//         return(
+//             <div>
+//                 <input type="text" ref={this.myRef1}></input>&nbsp;
+//                 <button onClick={this.showInput}>提示输入</button>&nbsp;
+//                 <input onBlur={this.handleBlur} type="text"
+//                        placeholder="失去焦点则提示"></input>
+//             </div>
+//         )
+//     }
+// }
+// ReactDOM.render(<App22  />, document.getElementById("root"))
+////////非受控组件写法//////没有提交的用户名和密码////
+// class App23 extends React.Component{
+//     myRef1 = React.createRef() //容器存储被ref所标识的节点
+//     myRef2 = React.createRef() //容器存储被ref所标识的节点
+//     handleSubmit = (event) =>{
+//         event.preventDefault() //为了测试没有实际发给服务器，故意这里阻止表单提交
+//         const username = this.myRef1.current //固定写法，KEY固定叫current
+//         const password = this.myRef2.current //固定写法，KEY固定叫current
+//         alert(`你输入的用户名是${username.value} ， 你输入的密码是${password.value} `)
+//         //username放的是节点信息，即输入框节点信息，而username.value才是具体数值
+//     }
+//     render(){
+//         return(
+//             <form onSubmit={this.handleSubmit}>
+//                 用户名：<input ref={this.myRef1} type='text' name='username'/>
+//                 密码：<input ref={this.myRef2} type='password' name='password'/>
+//                 <button>登陆</button>
+//             </form>
+//         )
+//     }
+// }
+// ReactDOM.render(<App23  />, document.getElementById("root"))
 
-}
-const anecdotes = [
-    'If it hurts, do it more often',
-    'Adding manpower to a late software project makes it later!',
-    'The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
-    'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
-    'Premature optimization is the root of all evil.',
-    'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
-]
-ReactDOM.render(<App19 anecdotes={anecdotes} />, document.getElementById("root"))
+////////高阶函数和函数柯里化//////没有提交的用户名和密码////
+// class App24 extends React.Component{
+//     //初始化状态
+//     state = {//固定写法，state名字不能乱改
+//         username:'',
+//         password:''
+//     }
+//     //保存用户名和密码到状态中,采用高阶函数和柯里化
+//     saveFormDate = (dataType) => {
+//         return(event)=>{
+//             this.setState({[dataType]:event.target.value})//注意对象[变量]
+//         }
+//     }
+//     //表单提交的回调,这里没有采用ref
+//     handleSubmit = (event) =>{
+//         event.preventDefault()//阻止表单提交
+//         const {username,password} = this.state//这里用存在状态里的数据，不是节点而是实际数值了
+//         alert(`你输入的用户名是${username} ， 你输入的密码是${password} `)
+//     }
+//     render(){
+//         return(
+//             <form onSubmit={this.handleSubmit}>
+//                 用户名：<input onChange={this.saveFormDate('username')}  type='text' name='username'/>
+//                 密码：<input  onChange={this.saveFormDate('password')}   type='password' name='password'/>
+//                 <button>登陆</button>
+//             </form>
+//         )
+//     }
+// }
+// ReactDOM.render(<App24  />, document.getElementById("root"))
+///////////////////////////////////////////
+////////高阶函数和不用柯里化//////没有提交的用户名和密码////
+// class App24 extends React.Component{
+//     //初始化状态
+//     state = {//固定写法，state名字不能乱改
+//         username:'',
+//         password:''
+//     }
+//     //保存用户名和密码到状态中,采用高阶函数，但是没有柯里化
+//     saveFormDate = (dataType,event) => {
+//        this.setState({[dataType]:event.target.value})//注意对象[变量]
+//     }
+//     //表单提交的回调,这里没有采用ref
+//     handleSubmit = (event) =>{
+//         event.preventDefault()//阻止表单提交
+//         const {username,password} = this.state//这里用存在状态里的数据，不是节点而是实际数值了
+//         alert(`你输入的用户名是${username} ， 你输入的密码是${password} `)
+//     }
+//     render(){
+//         return(
+//             <form onSubmit={this.handleSubmit}>
+//                 用户名：<input onChange={ event =>this.saveFormDate('username',event)}  type='text' name='username'/>
+//                 密码：<input  onChange={event =>this.saveFormDate('password',event)}   type='password' name='password'/>
+//                 <button>登陆</button>
+//             </form>
+//         )
+//     }
+// }
+// ReactDOM.render(<App24  />, document.getElementById("root"))
+//////////////////////生命周期///////////
+// class App25 extends React.Component{
+//     death = () =>{//卸载组件unmount，让组件从页面上消失
+//         ReactDOM.unmountComponentAtNode(document.getElementById('root'))
+//     }
+//     state = {
+//         opacity :0.5
+//     }
+//     //组件挂载页面之后
+//     componentDidMount() {
+//         this.timer = setInterval(()=>{
+//                 //获取原来的状态
+//                 let {opacity} = this.state
+//                 //减少0.1
+//                 opacity = opacity-0.1
+//                 //设置新的透明度
+//                 if (opacity<=0) opacity=1
+//                 this.setState({opacity:opacity})
+//             },200
+//         )
+//     }
+//     //组件将要卸载
+//     componentWillUnmount() {
+//         clearInterval(this.timer) //清空定时器
+//     }
+//     //初始化渲染，状态更新后
+//     render(){
+//         return(
+//             <div>
+//                 <h2 style={{opacity:this.state.opacity}}>我爱你</h2>
+//                 <button onClick={this.death}>按了就消失文字</button>
+//             </div>
+//         )
+//     }
+// }
+// ReactDOM.render(<App25  />, document.getElementById("root"))
+///////////////时钟//////////////////////
+// const myStyle={
+//     color:"red"
+// }
+// class App26 extends  React.Component {
+//     state = {date: new Date()}
+//     componentDidMount(){
+//         setInterval(()=>{
+//                 this.setState({date: new Date()})
+//             },1000
+//         )
+//     }
+//     render(){
+//         return (
+//             <div>
+//                 <h1>hello</h1>
+//                 <input type='text'/><br/>
+//                 <span style={myStyle}>现在是:{this.state.date.toTimeString()}</span>
+//             </div>
+//         )
+//     }
+// }
+// ReactDOM.render(<App26  />, document.getElementById("root"))
+////////////////////diffing对比////////////////
+// class App27 extends  React.Component {
+//     state ={
+//         persons: [
+//             {id:1,name:'小李',age:18},
+//             {id:2,name:'小张',age:19}
+//         ]
+//     }
+//     add = () =>{
+//         const {persons} = this.state
+//         const p = {id:persons.length+1,name:'小王',age:20}
+//         this.setState({persons: [p,...persons]})
+//     }
+//     render(){
+//         return(
+//             <div>
+//                 <h2>infor</h2>
+//                 <button onClick={this.add}>添加一个小王</button>
+//                 <h3>使用index(索引值）作为KEY，可能存在问题</h3>
+//                 <ul>
+//                     {this.state.persons.map(
+//                         (personObj,index)=>{return(<li key={index}>{personObj.name}:{personObj.age}
+//                         <input type='text'/></li>)}
+//                     )}
+//                 </ul>
+//                 <hr/>
+//                 <hr/>
+//                 <h3>使用id(数据的唯一索引）作为KEY，正确做法</h3>
+//                 {this.state.persons.map(
+//                     (personObj)=>{return(<li key={personObj.id}>{personObj.name}:{personObj.age}
+//                         <input type='text'/></li>)}
+//                 )}
+//             </div>
+//         )
+//     }
 
+// }
+// ReactDOM.render(<App27  />, document.getElementById("root"))
+//////////////////////////////////
