@@ -1,7 +1,7 @@
 import Weather from './Weather.js'
 const Country = ({ country }) => {
     let api_key = process.env.REACT_APP_API_KEY //unususal this time
-    api_key = '04826e8910586c738417834d517fb3c4'
+    api_key = ''
     let url='http://api.weatherstack.com/current?access_key='+api_key+'&query='
     return (
         <div>
